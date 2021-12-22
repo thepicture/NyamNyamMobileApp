@@ -1,4 +1,4 @@
-﻿using NyamNyamMobileApp.Models;
+﻿using NyamNyamMobileApp.Models.ResponseModels;
 using NyamNyamMobileApp.Services;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace NyamNyamMobileApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<ResponseOrder> OrderDataStore => DependencyService.Get<IDataStore<ResponseOrder>>();
 
         bool isBusy = false;
         public bool IsBusy
