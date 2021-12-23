@@ -28,6 +28,27 @@
                                    CornerRadius="40"
                                    WidthRequest="20"
                                    HeightRequest="20">
+                                    <Frame.Style>
+                                        <Style TargetType="Frame">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="Waiting">
+                                                    <Setter Property="Background" Value="Orange" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="In process">
+                                                    <Setter Property="Background" Value="Yellow" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="Finished">
+                                                    <Setter Property="Background" Value="Green" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Frame.Style>
                                 </Frame>
                                 <Label Text="{Binding Status}"
                                        TextColor="Black"

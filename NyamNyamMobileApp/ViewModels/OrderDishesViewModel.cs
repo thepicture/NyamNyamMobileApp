@@ -9,6 +9,12 @@ namespace NyamNyamMobileApp.ViewModels
     public class OrderDishesViewModel : BaseViewModel
     {
         private string id;
+        private ResponseOrder order;
+
+        public OrderDishesViewModel()
+        {
+            Title = "Order dishes";
+        }
 
         public string Id
         {
@@ -20,11 +26,17 @@ namespace NyamNyamMobileApp.ViewModels
             }
         }
 
+        public ResponseOrder Order
+        {
+            get => order;
+            set => SetProperty(ref order, value);
+        }
+
         public async void LoadId(string itemId)
         {
             try
             {
-                var order = await OrderDataStore.GetItemAsync(itemId);
+                Order = await OrderDataStore.GetItemAsync(itemId);
             }
             catch (Exception)
             {

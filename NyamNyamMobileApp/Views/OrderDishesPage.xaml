@@ -2,16 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:NyamNyamMobileApp.ViewModels" 
+             xmlns:models="clr-namespace:NyamNyamMobileApp.Models.ResponseModels"
              x:DataType="viewmodels:OrderDishesViewModel"
-             x:Class="NyamNyamMobileApp.Views.OrderDishesPage">
+             x:Class="NyamNyamMobileApp.Views.OrderDishesPage"
+             Title="{Binding Title}">
     <ContentPage.BindingContext>
         <viewmodels:OrderDishesViewModel></viewmodels:OrderDishesViewModel>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Dishes page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <CollectionView ItemsSource="{Binding Order.DishesList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type models:ResponseDish}">
+                        <Label Text="{Binding NameOfDish}"></Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
@@ -32,7 +33,8 @@ namespace NyamNyamMobileApp.Services
 
         public async Task<ResponseOrder> GetItemAsync(string id)
         {
-            throw new NotImplementedException();
+            IEnumerable<ResponseOrder> orders = await GetItemsAsync();
+            return orders.ToList().First(o => o.Id == int.Parse(id));
         }
 
         public async Task<IEnumerable<ResponseOrder>> GetItemsAsync(bool forceRefresh = false)
