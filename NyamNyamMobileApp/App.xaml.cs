@@ -1,8 +1,5 @@
 ﻿using NyamNyamMobileApp.Services;
-using NyamNyamMobileApp.Views;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace NyamNyamMobileApp
 {
@@ -14,6 +11,7 @@ namespace NyamNyamMobileApp
             InitializeComponent();
 
             DependencyService.Register<OrderDataStore>();
+            DependencyService.Register<PopupDialogService>();
             MainPage = new AppShell();
         }
 
