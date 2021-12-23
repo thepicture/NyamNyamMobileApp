@@ -12,9 +12,102 @@
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding Order.DishesList}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="2"
+                                     Orientation="Vertical">
+                    </GridItemsLayout>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type models:ResponseDish}">
-                        <Label Text="{Binding NameOfDish}"></Label>
+                    <DataTemplate>
+                        <AbsoluteLayout x:DataType="{x:Type models:ResponseDish}">
+                            <Frame BorderColor="Black"
+                                   Margin="20">
+                                <StackLayout HeightRequest="150">
+                                    <Label Text="{Binding NameOfDish}"
+                                           FontSize="Medium"
+                                           HorizontalOptions="Center"
+                                           FontAttributes="Bold"
+                                           TextColor="Black"
+                                           LineBreakMode="TailTruncation"></Label>
+                                    <Grid ColumnDefinitions="20,*" HeightRequest="20">
+                                    <Frame CornerRadius="20"
+                                           BorderColor="Black">
+                                            <Frame.Style>
+                                                <Style TargetType="Frame">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="Waiting">
+                                                            <Setter Property="Background" Value="Orange" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="In process">
+                                                            <Setter Property="Background" Value="Yellow" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}"
+                                                             TargetType="Frame"
+                                                             Value="Finished">
+                                                            <Setter Property="Background" Value="Green" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Frame.Style>
+                                        </Frame>
+                                    <Label Text="{Binding Status}"
+                                           FontSize="Small"
+                                           Grid.Column="1"
+                                           TextColor="Black"></Label>
+                                    </Grid>
+                                        <Label Text="{Binding CookingTime,StringFormat='Time: {0}'}"
+                                           FontSize="Small"
+                                           Grid.Column="1"
+                                           TextColor="Black"></Label>
+                                    <Label Text="{Binding Servings,StringFormat='Servings: {0}'}"
+                                           FontSize="Small"
+                                           Grid.Column="1"
+                                           TextColor="Black"></Label>
+                                    <Label Text="{Binding StartTime}"
+                                           FontSize="Small"
+                                           Grid.Column="1"
+                                           TextColor="Black">
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="IsVisible" Value="False" />
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="In process">
+                                                        <Setter Property="IsVisible" Value="True" />
+                                                        <Setter Property="Text" Value="{Binding StartTime}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="Finished">
+                                                        <Setter Property="IsVisible" Value="True" />
+                                                        <Setter Property="Text" Value="{Binding FinishTime}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                    <Button Text="Start!">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="IsVisible" Value="False" />
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Button"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="Waiting">
+                                                        <Setter Property="IsVisible" Value="True" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackLayout>
+                            </Frame>
+                        </AbsoluteLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
