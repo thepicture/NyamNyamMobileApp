@@ -16,48 +16,52 @@
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <AbsoluteLayout Margin="10">
-                    <Frame BorderColor="Black">
-                        <Grid x:DataType="model:ResponseOrder"
-                              ColumnDefinitions="auto,6*,5*">
-                            <Frame BorderColor="Black"
+                    <AbsoluteLayout Margin="10"
+                                    x:DataType="model:ResponseOrder">
+                        <AbsoluteLayout.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=OrderTapped}"></TapGestureRecognizer>
+                        </AbsoluteLayout.GestureRecognizers>
+                        <Frame BorderColor="Black">
+                            <Grid ColumnDefinitions="auto,6*,5*">
+                                <Frame BorderColor="Black"
                                    CornerRadius="40"
                                    WidthRequest="20"
                                    HeightRequest="20">
-                            </Frame>
+                                </Frame>
                                 <Label Text="{Binding Status}"
                                        TextColor="Black"
                                        FontSize="Small"
                                        HorizontalTextAlignment="Center"
                                        VerticalTextAlignment="Center"></Label>
-                            <StackLayout Grid.Column="1">
-                                <Label Text="{Binding CustomerFullName, StringFormat='Customer: {0}'}"
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding CustomerFullName, StringFormat='Customer: {0}'}"
                                        FontAttributes="Bold"
                                        FontSize="Small"
                                        Grid.Column="1"
                                        TextColor="Black"></Label>
-                                <Label Text="{Binding Dishes, StringFormat='Dishes: {0}'}"
+                                    <Label Text="{Binding Dishes, StringFormat='Dishes: {0}'}"
                                    FontSize="Small"
                                    Grid.Column="1"
                                    LineBreakMode="TailTruncation"
                                    TextColor="Black"></Label>
-                            </StackLayout>
-                            <StackLayout Grid.Column="2">
-                                <Label Text="{Binding AppointmentDate}"
+                                </StackLayout>
+                                <StackLayout Grid.Column="2">
+                                    <Label Text="{Binding AppointmentDate}"
                                        FontAttributes="Bold"
                                        FontSize="Small"
                                        Grid.Column="2"
                                        HorizontalTextAlignment="End"
                                        TextColor="Black"></Label>
-                                <Label Text="{Binding TotalCost, StringFormat='Total cost: {0}'}"
+                                    <Label Text="{Binding TotalCost, StringFormat='Total cost: {0}'}"
                                        FontAttributes="Italic"
                                        Grid.Column="2"
                                        HorizontalTextAlignment="End"
                                        FontSize="Small"
                                        TextColor="Black"></Label>
-                            </StackLayout>
-                        </Grid>
-                    </Frame>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
                     </AbsoluteLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

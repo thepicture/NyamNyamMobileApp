@@ -1,18 +1,15 @@
-﻿using NyamNyamMobileApp.ViewModels;
-using NyamNyamMobileApp.Views;
-using System;
-using System.Collections.Generic;
+﻿using NyamNyamMobileApp.Views;
 using Xamarin.Forms;
 
 namespace NyamNyamMobileApp
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(OrderDishesPage), typeof(OrderDishesPage));
+            Routing.RegisterRoute(nameof(OrderIngredientsPage), typeof(OrderIngredientsPage));
         }
-
     }
 }

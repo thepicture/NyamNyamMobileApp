@@ -67,11 +67,18 @@ namespace NyamNyamMobileApp.ViewModels
 
         async void OnOrderSelected(ResponseOrder order)
         {
-            if (order == null)
+            if(order == null)
+            {
                 return;
-
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.OrderId)}={order.Id}");
+            }
+            if (order.Status == "Waiting" && !order.IsEnoughIngredients)
+            {
+                await Shell.Current.GoToAsync($"{nameof(OrderIngredientsPage)}?{nameof(OrderIngredientsViewModel.Id)}={order.Id}");
+            }
+            else
+            {
+                await Shell.Current.GoToAsync($"{nameof(OrderDishesPage)}?{nameof(OrderDishesViewModel.Id)}={order.Id}");
+            }
         }
     }
 }
