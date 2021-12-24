@@ -17,7 +17,6 @@
                 <DataTemplate>
                     <Grid x:DataType="{x:Type models:ResponseIngredientGroup}">
                         <Label Text="{Binding Name}"
-                               TextColor="Black"
                                FontAttributes="Bold"
                                FontSize="Large">
                             <Label.Style>
@@ -38,7 +37,6 @@
                             </Label.Style>
                         </Label>
                         <Label Text="Total: x$"
-                           TextColor="Black"
                            FontAttributes="Bold"
                            FontSize="Large"
                            HorizontalOptions="End"/>
@@ -47,23 +45,20 @@
             </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="0,20,0,20"
+                    <StackLayout Padding="20,10,20,10"
                                  HorizontalOptions="Fill"
                                  x:DataType="responsemodels:ResponseIngredient">
                             <Grid>
                                 <StackLayout>
                                     <Label Text="{Binding IngredientName}"
-                                           TextColor="Black"
                                            FontSize="Medium"></Label>
                                     <Label Text="{Binding PriceInCents, StringFormat='Price: {0}$'}"
-                                           TextColor="Black"
                                            FontAttributes="Italic"
                                            FontSize="Small"></Label>
                                 </StackLayout>
                             <StackLayout HorizontalOptions="End"
                                          Orientation="Horizontal">
-                                <Label TextColor="Black"
-                                       FontSize="Large"
+                                <Label FontSize="Large"
                                        HorizontalTextAlignment="End"
                                        VerticalTextAlignment="Center">
                                     <Label.FormattedText>
@@ -77,12 +72,10 @@
                                 </Label>
                                 <Button Text="OK"
                                         IsVisible="{Binding IsAvailable}"
-                                        VerticalOptions="Center"
-                                        Background="LightGreen"></Button>
+                                        VerticalOptions="Center"></Button>
                             </StackLayout>
                             </Grid>
-                        <BoxView Color="Black"
-                                 HeightRequest="1"></BoxView>
+                        <BoxView Style="{StaticResource CommonBoxView}"></BoxView>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

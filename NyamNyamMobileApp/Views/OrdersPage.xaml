@@ -22,36 +22,36 @@
                             <TapGestureRecognizer CommandParameter="{Binding .}"
                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=OrderTapped}"></TapGestureRecognizer>
                         </AbsoluteLayout.GestureRecognizers>
-                        <Frame BorderColor="Black">
+                        <Frame>
                             <Grid ColumnDefinitions="auto,6*,5*">
-                                <Frame BorderColor="Black"
-                                   CornerRadius="40"
-                                   WidthRequest="20"
-                                   HeightRequest="20">
+                                <Frame>
                                     <Frame.Style>
-                                        <Style TargetType="Frame">
+                                        <Style TargetType="Frame"
+                                               BasedOn="{StaticResource CircleFrame}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Status}"
                                                              TargetType="Frame"
                                                              Value="Waiting">
-                                                    <Setter Property="Background" Value="Orange" />
+                                                    <Setter Property="Background" 
+                                                            Value="Orange" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Status}"
                                                              TargetType="Frame"
                                                              Value="In process">
-                                                    <Setter Property="Background" Value="Yellow" />
+                                                    <Setter Property="Background" 
+                                                            Value="Yellow" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Status}"
                                                              TargetType="Frame"
                                                              Value="Finished">
-                                                    <Setter Property="Background" Value="Green" />
+                                                    <Setter Property="Background" 
+                                                            Value="Green" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Frame.Style>
                                 </Frame>
                                 <Label Text="{Binding Status}"
-                                       TextColor="Black"
                                        FontSize="Small"
                                        HorizontalTextAlignment="Center"
                                        VerticalTextAlignment="Center"></Label>
@@ -59,27 +59,23 @@
                                     <Label Text="{Binding CustomerFullName, StringFormat='Customer: {0}'}"
                                        FontAttributes="Bold"
                                        FontSize="Small"
-                                       Grid.Column="1"
-                                       TextColor="Black"></Label>
+                                       Grid.Column="1"></Label>
                                     <Label Text="{Binding Dishes, StringFormat='Dishes: {0}'}"
-                                   FontSize="Small"
-                                   Grid.Column="1"
-                                   LineBreakMode="TailTruncation"
-                                   TextColor="Black"></Label>
+                                           FontSize="Small"
+                                           Grid.Column="1"
+                                           LineBreakMode="TailTruncation"></Label>
                                 </StackLayout>
                                 <StackLayout Grid.Column="2">
                                     <Label Text="{Binding AppointmentDate}"
                                        FontAttributes="Bold"
                                        FontSize="Small"
                                        Grid.Column="2"
-                                       HorizontalTextAlignment="End"
-                                       TextColor="Black"></Label>
+                                       HorizontalTextAlignment="End"></Label>
                                     <Label Text="{Binding TotalCost, StringFormat='Total cost: {0}'}"
                                        FontAttributes="Italic"
                                        Grid.Column="2"
                                        HorizontalTextAlignment="End"
-                                       FontSize="Small"
-                                       TextColor="Black"></Label>
+                                       FontSize="Small"></Label>
                                 </StackLayout>
                             </Grid>
                         </Frame>

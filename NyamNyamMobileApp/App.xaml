@@ -7,7 +7,28 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Primary">#fdb249</Color>
+            <Style TargetType="Frame"
+                   x:Key="CircleFrame">
+                <Setter Property="CornerRadius" Value="40" />
+                <Setter Property="WidthRequest" Value="30" />
+                <Setter Property="HeightRequest" Value="30" />
+            </Style>
+            <Style TargetType="Frame"
+                   x:Key="RoundedFrame">
+                <Setter Property="CornerRadius" Value="20" />
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="BorderColor" Value="Black" />
+            </Style>
+            <Style TargetType="BoxView"
+                   x:Key="CommonBoxView">
+                <Setter Property="Color" Value="Black" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
