@@ -1,8 +1,9 @@
-﻿using NyamNyamMobileApp.Models;
-using NyamNyamMobileApp.Models.ResponseModels;
+﻿using NyamNyamMobileApp.Models.ResponseModels;
+using NyamNyamMobileApp.Services;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace NyamNyamMobileApp.ViewModels
@@ -11,80 +12,49 @@ namespace NyamNyamMobileApp.ViewModels
     public class OrderIngredientsViewModel : BaseViewModel
     {
         private string id;
-        public List<ResponseIngredientGroup> Ingredients { get; set; } =
-            new List<ResponseIngredientGroup>();
+        private ObservableCollection<CollectionResponseIngredientGroup> ingredients;
+
+        public ObservableCollection<CollectionResponseIngredientGroup> Ingredients
+        {
+            get => ingredients;
+            set => SetProperty(ref ingredients, value);
+        }
+        public Command LoadIngredientsCommand { get; }
 
         public OrderIngredientsViewModel()
         {
             Title = "Ingredients";
+            Ingredients = new ObservableCollection<CollectionResponseIngredientGroup>();
+            LoadIngredientsCommand = new Command(async () => await ExecuteLoadIngredientsCommand());
+        }
 
-            Ingredients.Add(new ResponseIngredientGroup("In stock", new List<ResponseIngredient>
-            {
-                new ResponseIngredient
-                {
-                    IngredientName = "Av1",
-                    CountInStock = 10.ToString(),
-                    Id = 1,
-                    PriceInCents = 200,
-                    RequiredQuantity = 5.ToString(),
-                    UnitText = "pcs",
-                    IsAvailable = false
-                },
-                  new ResponseIngredient
-                {
-                    IngredientName = "Av2",
-                    CountInStock = 50.ToString(),
-                    Id = 1,
-                    PriceInCents = 5,
-                    RequiredQuantity = 10.ToString(),
-                    UnitText = "pcs",
-                    IsAvailable = false
-                },
-                    new ResponseIngredient
-                {
-                    IngredientName = "Av3",
-                    CountInStock = 10.ToString(),
-                    Id = 1,
-                    PriceInCents = 200,
-                    RequiredQuantity = 10.ToString(),
-                    UnitText = "ml",
-                    IsAvailable = false
-                },
-            })); ;
+        private async Task ExecuteLoadIngredientsCommand()
+        {
+            IsBusy = true;
 
-            Ingredients.Add(new ResponseIngredientGroup("Not available", new List<ResponseIngredient>
+            try
             {
-                new ResponseIngredient
+                Ingredients.Clear();
+                var groups = await ((OrderDataStore)OrderDataStore).GetResponseIngredientGroupsAsync(Id);
+                var newGroups = new ObservableCollection<CollectionResponseIngredientGroup>();
+                foreach (var group in groups)
                 {
-                    IngredientName = "NotAv1",
-                    CountInStock = 10.ToString(),
-                    Id = 1,
-                    PriceInCents = 200,
-                    RequiredQuantity = 20.ToString(),
-                    UnitText = "pcs",
-                    IsAvailable = true
-                },
-                  new ResponseIngredient
-                {
-                    IngredientName = "NotAv2",
-                    CountInStock = 50.ToString(),
-                    Id = 1,
-                    PriceInCents = 5,
-                    RequiredQuantity = 100.ToString(),
-                    UnitText = "pcs",
-                    IsAvailable = true
-                },
-                    new ResponseIngredient
-                {
-                    IngredientName = "NotAv3",
-                    CountInStock = 4.5.ToString(),
-                    Id = 1,
-                    PriceInCents = 200,
-                    RequiredQuantity = 5.ToString(),
-                    UnitText = "ml",
-                    IsAvailable = true
-                },
-            }));
+                    newGroups.Add(new CollectionResponseIngredientGroup
+                    (
+                        group.Name,
+                        group.Ingredients
+                    ));
+                    Ingredients = newGroups;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         public string Id
@@ -95,6 +65,11 @@ namespace NyamNyamMobileApp.ViewModels
                 id = value;
                 LoadId(value);
             }
+        }
+
+        public void OnAppearing()
+        {
+            IsBusy = true;
         }
 
         public async void LoadId(string itemId)

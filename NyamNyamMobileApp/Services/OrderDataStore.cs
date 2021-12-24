@@ -45,5 +45,14 @@ namespace NyamNyamMobileApp.Services
             OrdersList ordersList = (OrdersList)serializer.ReadObject(new MemoryStream(response));
             return await Task.FromResult(ordersList.Orders);
         }
+
+        public async Task<IEnumerable<ResponseIngredientGroup>> GetResponseIngredientGroupsAsync(string id)
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ResponseIngredientGroupsList));
+            WebClient client = new WebClient();
+            byte[] response = client.DownloadData(BaseUrl + "orderapi/" + id + "/ingredients");
+            ResponseIngredientGroupsList groupsList = (ResponseIngredientGroupsList)serializer.ReadObject(new MemoryStream(response));
+            return await Task.FromResult(groupsList.GroupList);
+        }
     }
 }

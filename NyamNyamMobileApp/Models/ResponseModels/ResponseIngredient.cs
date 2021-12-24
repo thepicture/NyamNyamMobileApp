@@ -2,15 +2,17 @@
 {
     public class ResponseIngredient
     {
+        public ResponseIngredient()
+        {
+        }
+
         public int Id { get; set; }
         public string IngredientName { get; set; }
         public int PriceInCents { get; set; }
         public string UnitText { get; set; }
-        public string RequiredQuantity { get; set; }
-        public string CountInStock { get; set; }
+        public float RequiredQuantity { get; set; }
+        public float CountInStock { get; set; }
         public bool IsAvailable { get; set; }
-        public ResponseIngredient()
-        {
-        }
+        public float PricePerUnit { get; set; }
     }
 }

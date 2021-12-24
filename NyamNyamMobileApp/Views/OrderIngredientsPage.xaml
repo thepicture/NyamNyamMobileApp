@@ -3,82 +3,98 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:NyamNyamMobileApp.ViewModels"
              xmlns:responsemodels="clr-namespace:NyamNyamMobileApp.Models.ResponseModels"
-             xmlns:models="clr-namespace:NyamNyamMobileApp.Models"
+             xmlns:models="clr-namespace:NyamNyamMobileApp.Models.ResponseModels"
              x:DataType="viewmodels:OrderIngredientsViewModel"
              x:Class="NyamNyamMobileApp.Views.OrderIngredientsPage"
              Title="{Binding Title}">
-    <ContentPage.BindingContext>
-        <viewmodels:OrderIngredientsViewModel></viewmodels:OrderIngredientsViewModel>
-    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <CollectionView ItemsSource="{Binding Ingredients}"
-                        IsGrouped="True">
-            <CollectionView.GroupHeaderTemplate>
-                <DataTemplate>
-                    <Grid x:DataType="{x:Type models:ResponseIngredientGroup}">
-                        <Label Text="{Binding Name}"
+        <StackLayout>
+            <RefreshView x:DataType="viewmodels:OrderIngredientsViewModel"
+                 Command="{Binding LoadIngredientsCommand}" 
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView ItemsSource="{Binding Ingredients}"
+                            IsGrouped="True">
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Grid x:DataType="{x:Type models:CollectionResponseIngredientGroup}">
+                                <Label Text="{Binding Name}"
                                FontAttributes="Bold"
                                FontSize="Large">
-                            <Label.Style>
-                                <Style TargetType="Label">
-                                    <Style.Triggers>
-                                        <DataTrigger TargetType="Label"
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label"
                                                      Binding="{Binding Name}"
                                                      Value="In stock">
-                                            <Setter Property="Background" Value="LightGreen" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label"
+                                                    <Setter Property="Background" Value="LightGreen" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label"
                                                      Binding="{Binding Name}"
                                                      Value="Not available">
-                                            <Setter Property="Background" Value="Orange" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Label.Style>
-                        </Label>
-                        <Label Text="Total: x$"
-                           FontAttributes="Bold"
-                           FontSize="Large"
-                           HorizontalOptions="End"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.GroupHeaderTemplate>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="20,10,20,10"
+                                                    <Setter Property="Background" Value="Orange" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label Text="{Binding TotalCostInDollars, StringFormat='Total: {0}$'}"
+                                       FontAttributes="Bold"
+                                       FontSize="Large"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="20,10,20,10"
                                  HorizontalOptions="Fill"
                                  x:DataType="responsemodels:ResponseIngredient">
-                            <Grid>
-                                <StackLayout>
-                                    <Label Text="{Binding IngredientName}"
+                                <Grid>
+                                    <StackLayout>
+                                        <Label Text="{Binding IngredientName}"
                                            FontSize="Medium"></Label>
-                                    <Label Text="{Binding PriceInCents, StringFormat='Price: {0}$'}"
+                                        <Label Text="{Binding PriceInCents, StringFormat='Price: {0}$'}"
                                            FontAttributes="Italic"
                                            FontSize="Small"></Label>
-                                </StackLayout>
-                            <StackLayout HorizontalOptions="End"
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="End"
                                          Orientation="Horizontal">
-                                <Label FontSize="Large"
+                                        <Label FontSize="Large"
                                        HorizontalTextAlignment="End"
                                        VerticalTextAlignment="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <FormattedString.Spans>
-                                                <Span Text="{Binding RequiredQuantity}"></Span>
-                                                <Span Text="{Binding UnitText}"></Span>
-                                            </FormattedString.Spans>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Button Text="OK"
-                                        IsVisible="{Binding IsAvailable}"
-                                        VerticalOptions="Center"></Button>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <FormattedString.Spans>
+                                                        <Span Text="{Binding RequiredQuantity}"></Span>
+                                                        <Span Text="{Binding UnitText}"></Span>
+                                                    </FormattedString.Spans>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Button Text="OK"
+                                                VerticalOptions="Center">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="IsEnabled"
+                                                            Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding IsAvailable}"
+                                                                     Value="False">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </StackLayout>
+                                </Grid>
+                                <BoxView Style="{StaticResource CommonBoxView}"></BoxView>
                             </StackLayout>
-                            </Grid>
-                        <BoxView Style="{StaticResource CommonBoxView}"></BoxView>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
