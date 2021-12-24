@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 
 namespace NyamNyamMobileApp.Services
 {
-    public class OrderedDishCookingStarter : IAsyncStarter
+    public class QuantityIncrementStarter : IAsyncStarter
     {
-        private readonly int orderId;
-        private readonly int dishId;
+        private readonly int ingredientId;
+        private readonly double incrementValue;
         private const string BaseUrl = "http://10.0.2.2:62319/api/";
 
-        public OrderedDishCookingStarter(int orderId, int dishId)
+        public QuantityIncrementStarter(int ingredientId, double incrementValue)
         {
-            this.orderId = orderId;
-            this.dishId = dishId;
+            this.ingredientId = ingredientId;
+            this.incrementValue = incrementValue;
         }
 
         public async Task<bool> StartAsync()
@@ -23,7 +23,7 @@ namespace NyamNyamMobileApp.Services
                 try
                 {
                     byte[] response = client
-                        .DownloadData($"{BaseUrl}ordereddishesapi/startcooking?orderid={orderId}&dishid={dishId}");
+                        .DownloadData($"{BaseUrl}ingredientsapi/{ingredientId}/increment?incrementValue={incrementValue}");
                 }
                 catch (WebException ex)
                 {
