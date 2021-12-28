@@ -6,6 +6,8 @@
         {
         }
 
+        public string RecipeName { get; set; }
+        public int ServingsCount { get; set; }
         public ResponseCookingStage[] CookingStages { get; set; }
     }
 }

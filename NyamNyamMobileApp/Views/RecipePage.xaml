@@ -2,17 +2,80 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:NyamNyamMobileApp.ViewModels" 
+             xmlns:responsemodels="clr-namespace:NyamNyamMobileApp.Models.ResponseModels"
              x:DataType="viewmodels:RecipeViewModel"
              x:Class="NyamNyamMobileApp.Views.RecipePage"
-             Title="{Binding Title}">
+             Title="{Binding Title, StringFormat='Recipe for &quot;{0}&quot;'}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding OrderId}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding DishId}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding StageList.ServingsCount, StringFormat='{0} servings'}"
+                   HorizontalOptions="Center"
+                   FontSize="Large"
+                   FontAttributes="Bold"></Label>
+            <CarouselView ItemsSource="{Binding StageList.CookingStages}"
+                          Margin="20">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <AbsoluteLayout x:DataType="responsemodels:ResponseCookingStage">
+                            <StackLayout>
+                                <Frame WidthRequest="30"
+                                       HeightRequest="30"
+                                       CornerRadius="100"
+                                       HorizontalOptions="Center">
+                                    <Label FontAttributes="Bold"
+                                           FontSize="Large"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Text="{Binding SequentialNumber}"></Label>
+                                </Frame>
+                                <Label FontAttributes="Italic"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding CookingTimeInMinutes, StringFormat='{0} min'}"></Label>
+                                <Label Text="Ingredients:"
+                                       FontSize="Large"
+                                       FontAttributes="Bold"></Label>
+                                <CollectionView ItemsSource="{Binding Ingredients}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <AbsoluteLayout x:DataType="responsemodels:ResponseCookingStageIngredient">
+                                                <StackLayout Margin="20,0,20,0">
+                                                    <Grid>
+                                                        <Label Text="{Binding Name}"
+                                                               FontSize="Large"
+                                                               HorizontalOptions="Start"></Label>
+                                                        <StackLayout Orientation="Horizontal"
+                                                                     HorizontalOptions="End">
+                                                            <Label Text="{Binding Quantity}"
+                                                                   FontSize="Large"
+                                                                   HorizontalOptions="End"></Label>
+                                                            <Label Text="{Binding Unit}"
+                                                                   FontSize="Large"
+                                                                   HorizontalOptions="End"></Label>
+                                                        </StackLayout>
+                                                    </Grid>
+                                                    <BoxView Style="{StaticResource CommonBoxView}"></BoxView>
+                                                </StackLayout>
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                    <CollectionView.Footer>
+                                        <StackLayout>
+                                <Label Text="Cooking Process:"
+                                       FontSize="Large"
+                                       FontAttributes="Bold"></Label>
+                                <Label Text="{Binding Description}"
+                                       FontSize="Large"
+                                       LineBreakMode="WordWrap"
+                                       Margin="20,0,20,0"></Label>
+                                            <Button Text="Finish!"></Button>
+                                        </StackLayout>
+                                    </CollectionView.Footer>
+                                </CollectionView>
+                            </StackLayout>
+                        </AbsoluteLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
