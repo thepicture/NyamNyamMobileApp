@@ -11,6 +11,7 @@ namespace NyamNyamMobileApp
             InitializeComponent();
 
             DependencyService.Register<OrderDataStore>();
+            DependencyService.Register<CookingStageDataStore>();
             DependencyService.Register<PopupDialogService>();
             MainPage = new AppShell();
         }

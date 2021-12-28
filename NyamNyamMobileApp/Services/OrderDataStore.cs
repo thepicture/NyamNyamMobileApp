@@ -54,5 +54,10 @@ namespace NyamNyamMobileApp.Services
             ResponseIngredientGroupsList groupsList = (ResponseIngredientGroupsList)serializer.ReadObject(new MemoryStream(response));
             return await Task.FromResult(groupsList.GroupList);
         }
+
+        public Task<IEnumerable<ResponseOrder>> GetItemsAsyncFromId(bool forceRefresh = false, params object[] id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

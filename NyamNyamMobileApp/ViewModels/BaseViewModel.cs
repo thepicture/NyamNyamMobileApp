@@ -11,6 +11,7 @@ namespace NyamNyamMobileApp.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<ResponseOrder> OrderDataStore => DependencyService.Get<IDataStore<ResponseOrder>>();
+        public IDataStore<ResponseCookingStage> CookingStageDataStore => DependencyService.Get<IDataStore<ResponseCookingStage>>();
 
         bool isBusy = false;
         public bool IsBusy

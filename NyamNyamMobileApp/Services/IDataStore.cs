@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NyamNyamMobileApp.Services
@@ -11,5 +10,6 @@ namespace NyamNyamMobileApp.Services
         Task<bool> DeleteItemAsync(string id);
         Task<T> GetItemAsync(string id);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<IEnumerable<T>> GetItemsAsyncFromId(bool forceRefresh = false, params object[] id);
     }
 }

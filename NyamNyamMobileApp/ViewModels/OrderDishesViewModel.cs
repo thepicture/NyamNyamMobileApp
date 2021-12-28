@@ -1,6 +1,7 @@
 ﻿using NyamNyamMobileApp.Models.ResponseModels;
 using NyamNyamMobileApp.Services;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 
@@ -14,11 +15,23 @@ namespace NyamNyamMobileApp.ViewModels
         public Command RefreshDishesCommand { get; }
         public Command StartDishCooking { get; }
 
+        public Command<int> OrderedDishTapped { get; }
+
         public OrderDishesViewModel()
         {
             Title = "Order dishes";
             RefreshDishesCommand = new Command(() => LoadId(Id));
             StartDishCooking = new Command(dishId => ExecuteStartDishCookingCommand(dishId));
+
+            OrderedDishTapped = new Command<int>(OnOrderedDishTapped);
+        }
+
+        private async void OnOrderedDishTapped(int dishId)
+        {
+            int orderId = Order.Id;
+            IEnumerable<ResponseCookingStage> stages =
+                await CookingStageDataStore
+                .GetItemsAsyncFromId(false, new object[] { orderId, dishId });
         }
 
         private async void ExecuteStartDishCookingCommand(object dishId)
