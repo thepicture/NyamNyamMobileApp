@@ -1,5 +1,6 @@
 ﻿using NyamNyamMobileApp.Models.ResponseModels;
 using NyamNyamMobileApp.Services;
+using NyamNyamMobileApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,6 +33,12 @@ namespace NyamNyamMobileApp.ViewModels
             IEnumerable<ResponseCookingStage> stages =
                 await CookingStageDataStore
                 .GetItemsAsyncFromId(false, new object[] { orderId, dishId });
+            if (stages == null)
+            {
+                return;
+            }
+
+            await Shell.Current.GoToAsync($"{nameof(RecipePage)}?{nameof(RecipeViewModel.OrderId)}={order.Id}&{nameof(RecipeViewModel.DishId)}={dishId}");
         }
 
         private async void ExecuteStartDishCookingCommand(object dishId)

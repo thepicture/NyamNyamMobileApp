@@ -10,6 +10,7 @@ namespace NyamNyamMobileApp
             InitializeComponent();
             Routing.RegisterRoute(nameof(OrderDishesPage), typeof(OrderDishesPage));
             Routing.RegisterRoute(nameof(OrderIngredientsPage), typeof(OrderIngredientsPage));
+            Routing.RegisterRoute(nameof(RecipePage), typeof(RecipePage));
         }
     }
 }
