@@ -13,7 +13,7 @@
                  Command="{Binding LoadIngredientsCommand}" 
                  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
                 <CollectionView ItemsSource="{Binding Ingredients}"
-                            IsGrouped="True">
+                                IsGrouped="True">
                     <CollectionView.GroupHeaderTemplate>
                         <DataTemplate>
                             <Grid x:DataType="{x:Type models:CollectionResponseIngredientGroup}">
@@ -73,17 +73,18 @@
                                         </Label>
                                         <Button Text="OK"
                                                 VerticalOptions="Center"
+                                                Background="LightGreen"
                                                 CommandParameter="{Binding .}"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:OrderIngredientsViewModel}}, Path=PerformIngredientAvailableCommand}">
                                             <Button.Style>
                                                 <Style TargetType="Button">
-                                                    <Setter Property="IsEnabled"
+                                                    <Setter Property="IsVisible"
                                                             Value="False" />
                                                     <Style.Triggers>
                                                         <DataTrigger TargetType="Button"
                                                                      Binding="{Binding IsAvailable}"
                                                                      Value="False">
-                                                            <Setter Property="IsEnabled" Value="True" />
+                                                            <Setter Property="IsVisible" Value="True" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>

@@ -42,7 +42,7 @@ namespace NyamNyamMobileApp.ViewModels
             if (result == null)
             {
                 await DependencyService.Get<IDialogService>().ShowInfo("The attempt " +
-                    " to change quantity was discard, nothing changed");
+                    "to change quantity was discard, nothing changed");
             }
             else
             {
