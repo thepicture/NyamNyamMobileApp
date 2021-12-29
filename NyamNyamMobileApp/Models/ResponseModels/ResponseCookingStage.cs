@@ -11,7 +11,6 @@
         public float CookingTimeInMinutes { get; set; }
         public ResponseCookingStageIngredient[] Ingredients { get; set; }
         public string Description { get; set; }
-        public string Status { get; set; }
         public int OrderId { get; set; }
         public int DishId { get; set; }
     }

@@ -67,7 +67,6 @@
                                        FontSize="Large"
                                        LineBreakMode="WordWrap"
                                        Margin="20,0,20,0"></Label>
-                                            <Button Text="Finish!"></Button>
                                         </StackLayout>
                                     </CollectionView.Footer>
                                 </CollectionView>
@@ -76,6 +75,25 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
+            <Button Text="Finish!"
+                    HorizontalOptions="Center"
+                    Margin="10"
+                    Command="{Binding FinishDishCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsVisible" 
+                                Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Button"
+                                         Binding="{Binding StageList.IsInProgress}"
+                                         Value="True">
+                                <Setter Property="IsVisible" 
+                                        Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

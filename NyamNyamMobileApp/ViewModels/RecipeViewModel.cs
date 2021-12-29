@@ -1,6 +1,9 @@
 ﻿using NyamNyamMobileApp.Models.ResponseModels;
+using NyamNyamMobileApp.Services;
+using NyamNyamMobileApp.Views;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace NyamNyamMobileApp.ViewModels
@@ -37,6 +40,37 @@ namespace NyamNyamMobileApp.ViewModels
              await CookingStageDataStore
              .GetItemsAsyncFromId(false, new object[] { orderId, dishId });
             StageList = stages.First();
+        }
+
+        private Command finishDishCommand;
+
+        public ICommand FinishDishCommand
+        {
+            get
+            {
+                if (finishDishCommand == null)
+                {
+                    finishDishCommand = new Command(FinishDish);
+                }
+
+                return finishDishCommand;
+            }
+        }
+
+        private async void FinishDish()
+        {
+            var endCookingStarter = new OrderedDishEndCookingStarter(OrderId, DishId);
+            if (await endCookingStarter.StartAsync())
+            {
+                await DependencyService.Get<IDialogService>().ShowInfo("The dish " +
+                    "has been successfully finished!");
+                await Shell.Current.GoToAsync($"{nameof(OrderDishesPage)}?{nameof(OrderDishesViewModel.Id)}={OrderId}");
+            }
+            else
+            {
+                await DependencyService.Get<IDialogService>().ShowInfo("The dish " +
+                  "has not been successfully finished! Try again or restart the app");
+            }
         }
     }
 }
